@@ -1,229 +1,40 @@
-<!DOCTYPE HTML>
-<html>
+extends base
 
-<head>
-	
-			
-    <title>
-    Rodeozhang的博客
-    </title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/css/mic_main.css" />
-    <link rel="stylesheet" href="/css/dropdownMenu.css" />
-    
-    	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-	
-    <noscript>
-        <link rel="stylesheet" href="/css/noscript.css" />
-    </noscript>
+block title
+  title= page.title + " | " + config.title
 
-			    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.scrollex.min.js"></script>
-    <script src="/js/jquery.scrolly.min.js"></script>
-    <script src="/js/skel.min.js"></script>
-    <script src="/js/util.js"></script>
-    <script src="/js/main.js"></script>
-	
-</head>
-    
-		
-<!-- Layouts -->
+block main
+
+  // gallery that comes before the header
+  if page.photos
+     if page.photos.length
+      .article-gallery
+        .article-gallery-photos.container
+          for photo in page.photos
+            a.article-gallery-img.fancybox(href=url_for(photo), rel="gallery_" + page._id)
+              img(src=url_for(photo), itemprop="image")
+
+  .wrapper
+    .container.post-header
+      h1: = page.title
+
+  .wrapper
+    .container.meta
+      .post-time= page.date.format(config.date_format)
+      if (page.categories && page.categories.length)
+        .post-categories
+          != list_categories(page.categories, {show_count: false, class: 'post-category', style: 'none', separator: '>'})
+      if (page.tags && page.tags.length)
+        .post-tags
+          != list_tags(page.tags, {show_count: false, class: 'post-tag', style:'none', separator:'/'})
 
 
+  article
+    .container.post
+      != page.content
 
-<!--  代码渲染  -->
-<link rel="stylesheet" href="/css/prism_okaidia.css" />
+    // comment system
+    .container
+      hr
+      include _partial/comments
 
-<!-- 文章页 -->
-<body class="is-loading">
-    <!-- Wrapper 外包 s-->
-    <div id="wrapper" class="fade-in">
-        <!-- Intro 头部显示 s -->
-        <!-- Intro 头部显示 e -->
-        <!-- Header 头部logo start -->
-        <header id="header">
-    <a href="/" class="logo">Devotion</a>
-</header>
-        <!-- Nav 导航条 start -->
-        <nav id="nav" class="special" >
-            <ul class="menu links" >
-			<!-- Homepage  主页  --> 
-			<li >
-	            <a href="/" rel="nofollow">主页</a>
-	        </li>
-			<!-- categories_name  分类   --> 
-	        
-	        <li class="active">
-	            <a href="#s1">分类</a>
-	                    <ul class="submenu">
-	                        <li>
-	                        
-	                    </ul>
-	        </li>
-	        
-	        <!-- archives  归档   --> 
-	        
-	        
-		        <!-- Pages 自定义   -->
-		        
-		        <li>
-		            <a href="/about/" title="简历">
-		                简历
-		            </a>
-		        </li>
-		        
-		        <li>
-		            <a href="/group/" title="团队">
-		                团队
-		            </a>
-		        </li>
-		        
-		        <li>
-		            <a href="/gallery/" title="图库">
-		                图库
-		            </a>
-		        </li>
-		        
-		        <li>
-		            <a href="/tag/" title="标签">
-		                标签
-		            </a>
-		        </li>
-		        
-
-
-            </ul>
-            <!-- icons 图标   -->
-			<ul class="icons">
-		            
-		                <li><a href="https://rodeozhang.github.io/" class="icon fa-github"><span class="label">GitHub</span></a></li>
-		            
-		            
-		            
-		            
-			</ul>
-</nav>
-
-        <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url(undefined);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >实验一</h2></a>
-            </div>
-            <!-- Post -->
-            <div class="post-content" >
-                <h1 id="实验一-在Github上用Markdown创建技术博客"><a href="#实验一-在Github上用Markdown创建技术博客" class="headerlink" title="实验一 在Github上用Markdown创建技术博客"></a>实验一 在Github上用Markdown创建技术博客</h1><h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、实验目的</h2><p>熟悉Github网站<br>掌握Markdown语法</p>
-<h2 id="二、实验任务"><a href="#二、实验任务" class="headerlink" title="二、实验任务"></a>二、实验任务</h2><p>1.注册Github账号    <em>Rodeozhang</em><br>2.创建Gihub Pages repository<br>3.发布第一篇博客   <em>my first blog</em><br>4.学习Markdown    <em>访问zybuluo.com,学习现成的语法规则</em><br>5.利用Hexo生成博客并部署到Github</p>
-<h2 id="三、实验步骤与结果"><a href="#三、实验步骤与结果" class="headerlink" title="三、实验步骤与结果"></a>三、实验步骤与结果</h2><h3 id="创建账号"><a href="#创建账号" class="headerlink" title="创建账号"></a>创建账号</h3><p>1.访问github.com网站，创建账户   <em>Rodeozhang</em></p>
-<p>2.建立第一个博客 <em>my- first- blog</em></p>
-<p>3.发布第一篇博客，和HQIZCC互相访问账户</p>
-<p>4.学习Markdown    <em>访问zybuluo.com,学习现成的语法规则</em></p>
-<p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\L{0Q$@]_IDYU@}D8SEMT}1A.png" alt="L{0Q$@_IDYU@}D8SEMT}1A"></p>
-<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><p>1.安装 node-v7.7.1-x86.msi ;<br>2.安装 Git-2.1.2.0-32-bit.exe ;<br>3.电脑 win+R 输入 cmd 回车，执行 npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org命令" target="_blank" rel="external">https://registry.npm.taobao.org命令</a> ;<br>4.在命令窗口中直接执行 cnpm install -g hexo-cli ;<br>5.在cmd命令窗口中，创建MD文件夹，执行语句为：mkdir MD ;<br>6.打开MD，创建hexo文件夹：执行命令为：cd /d D:\MD,回车，执行：mkdir hexo ;<br>7.打开hexo文件夹，执行hexo init hexo,执行语句为：cd /d D:\MD\hexo,回车，执行hexo init hexo 语句 ;<br>8.执行 cnpm install ;<br>9.执行 hexo server.</p>
-<p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\B4}V{V97HL0HJ2T]Q[GDNMV.png" alt="B4}V{V97HL0HJ2TQGDNMV"></p>
-<h2 id="四、实验小结"><a href="#四、实验小结" class="headerlink" title="四、实验小结"></a>四、实验小结</h2><p> 刚接触Blog，觉得很新鲜，在同学的帮助下完成了博客的创建，对于很多不懂的还得好好学习。</p>
-
-             </div>
-
-            <!-- Post Comments -->
-            
-    <!-- 使用 DISQUS_CLICK -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-
-<!-- add animation -->
-<style>
-	.disqus_click_btn {
-            line-height: 30px;
-            margin: 0;
-            min-width: 50px;
-            padding: 0 14px;
-            display: inline-block;
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0;
-            overflow: hidden;
-            will-change: box-shadow;
-            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
-            outline: 0;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-            vertical-align: middle;
-            border: 0;
-            background: rgba(158, 158, 158, .2);
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-            color: #fff;
-            background-color: #7EC0EE;
-            text-shadow: 0
-        }
-</style>
-	
-<div class="btn_click_load" id="disqus_bt"> 
-    <button class="disqus_click_btn">点击查看评论</button>
-</div>
-
-<!--
-<script type="text/javascript">
-$('.btn_click_load').click(function() {
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    document.getElementById('disqus_bt').style.display = "none";
-});
-</script>
--->
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2017/03/14/实验一 在Github上用Markdown创建技术博客/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yoursite.com/2017/03/14/实验一 在Github上用Markdown创建技术博客/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-
-<script type="text/javascript">
-    $('.btn_click_load').click(function() {  //click to load comments
-        (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document;
-            var s = d.createElement('script');
-            s.src = '//http-miccall-tech.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', + new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-        $('.btn_click_load').css('display','none');
-    });
-</script>
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-
-        </div>
-        <!-- Copyright 版权 start -->
-                <div id="copyright">
-            <ul>
-                <li>&copy;Powered By <a href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
-                <li>Design: <a href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
-            </ul>
-            
-            	<span id="busuanzi_container_site_pv">2017总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-			
-        </div>
-    </div>
-</body>
-
-
-
- 	
-</html>

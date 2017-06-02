@@ -1,220 +1,40 @@
-<!DOCTYPE HTML>
-<html>
+extends base
 
-<head>
-	
-			
-    <title>
-    Rodeozhang的博客
-    </title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/css/mic_main.css" />
-    <link rel="stylesheet" href="/css/dropdownMenu.css" />
-    
-    	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-	
-    <noscript>
-        <link rel="stylesheet" href="/css/noscript.css" />
-    </noscript>
+block title
+  title= page.title + " | " + config.title
 
-			    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.scrollex.min.js"></script>
-    <script src="/js/jquery.scrolly.min.js"></script>
-    <script src="/js/skel.min.js"></script>
-    <script src="/js/util.js"></script>
-    <script src="/js/main.js"></script>
-	
-</head>
-    
-		
-<!-- Layouts -->
+block main
+
+  // gallery that comes before the header
+  if page.photos
+     if page.photos.length
+      .article-gallery
+        .article-gallery-photos.container
+          for photo in page.photos
+            a.article-gallery-img.fancybox(href=url_for(photo), rel="gallery_" + page._id)
+              img(src=url_for(photo), itemprop="image")
+
+  .wrapper
+    .container.post-header
+      h1: = page.title
+
+  .wrapper
+    .container.meta
+      .post-time= page.date.format(config.date_format)
+      if (page.categories && page.categories.length)
+        .post-categories
+          != list_categories(page.categories, {show_count: false, class: 'post-category', style: 'none', separator: '>'})
+      if (page.tags && page.tags.length)
+        .post-tags
+          != list_tags(page.tags, {show_count: false, class: 'post-tag', style:'none', separator:'/'})
 
 
+  article
+    .container.post
+      != page.content
 
-<!--  代码渲染  -->
-<link rel="stylesheet" href="/css/prism_okaidia.css" />
+    // comment system
+    .container
+      hr
+      include _partial/comments
 
-<!-- 文章页 -->
-<body class="is-loading">
-    <!-- Wrapper 外包 s-->
-    <div id="wrapper" class="fade-in">
-        <!-- Intro 头部显示 s -->
-        <!-- Intro 头部显示 e -->
-        <!-- Header 头部logo start -->
-        <header id="header">
-    <a href="/" class="logo">Devotion</a>
-</header>
-        <!-- Nav 导航条 start -->
-        <nav id="nav" class="special" >
-            <ul class="menu links" >
-			<!-- Homepage  主页  --> 
-			<li >
-	            <a href="/" rel="nofollow">主页</a>
-	        </li>
-			<!-- categories_name  分类   --> 
-	        
-	        <li class="active">
-	            <a href="#s1">分类</a>
-	                    <ul class="submenu">
-	                        <li>
-	                        
-	                    </ul>
-	        </li>
-	        
-	        <!-- archives  归档   --> 
-	        
-	        
-		        <!-- Pages 自定义   -->
-		        
-		        <li>
-		            <a href="/about/" title="简历">
-		                简历
-		            </a>
-		        </li>
-		        
-		        <li>
-		            <a href="/group/" title="团队">
-		                团队
-		            </a>
-		        </li>
-		        
-		        <li>
-		            <a href="/gallery/" title="图库">
-		                图库
-		            </a>
-		        </li>
-		        
-		        <li>
-		            <a href="/tag/" title="标签">
-		                标签
-		            </a>
-		        </li>
-		        
-
-
-            </ul>
-            <!-- icons 图标   -->
-			<ul class="icons">
-		            
-		                <li><a href="https://rodeozhang.github.io/" class="icon fa-github"><span class="label">GitHub</span></a></li>
-		            
-		            
-		            
-		            
-			</ul>
-</nav>
-
-        <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url(undefined);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 ></h2></a>
-            </div>
-            <!-- Post -->
-            <div class="post-content" >
-                <h1 id="实验二-Git的使用"><a href="#实验二-Git的使用" class="headerlink" title="实验二 Git的使用"></a>实验二 Git的使用</h1><h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、实验目的</h2><h3 id="1-掌握git使用"><a href="#1-掌握git使用" class="headerlink" title="1.掌握git使用"></a>1.掌握git使用</h3><h3 id="2-掌握使用Github作为远程仓库"><a href="#2-掌握使用Github作为远程仓库" class="headerlink" title="2.掌握使用Github作为远程仓库"></a>2.掌握使用Github作为远程仓库</h3><h2 id="二、实验任务"><a href="#二、实验任务" class="headerlink" title="二、实验任务"></a>二、实验任务</h2><h3 id="1-练习本地git操作"><a href="#1-练习本地git操作" class="headerlink" title="1.练习本地git操作"></a>1.练习本地git操作</h3><h3 id="2-用SSH同步本地与Github仓库"><a href="#2-用SSH同步本地与Github仓库" class="headerlink" title="2.用SSH同步本地与Github仓库"></a>2.用SSH同步本地与Github仓库</h3><h2 id="三、实验步骤与结果"><a href="#三、实验步骤与结果" class="headerlink" title="三、实验步骤与结果"></a>三、实验步骤与结果</h2><h3 id="1-同步本地与Github仓库："><a href="#1-同步本地与Github仓库：" class="headerlink" title="1.同步本地与Github仓库："></a>1.同步本地与Github仓库：</h3><h4 id="下载Github客户端并安装成功"><a href="#下载Github客户端并安装成功" class="headerlink" title="下载Github客户端并安装成功"></a>下载Github客户端并安装成功</h4><h4 id="打开Github客户端并登录"><a href="#打开Github客户端并登录" class="headerlink" title="打开Github客户端并登录"></a>打开Github客户端并登录</h4><h4 id="在git目录下创建一个名为poem的项目"><a href="#在git目录下创建一个名为poem的项目" class="headerlink" title="在git目录下创建一个名为poem的项目"></a>在git目录下创建一个名为poem的项目</h4><h4 id="将创建好的新的项目同步到Github客户端"><a href="#将创建好的新的项目同步到Github客户端" class="headerlink" title="将创建好的新的项目同步到Github客户端"></a>将创建好的新的项目同步到Github客户端</h4><h4 id="在客户端可以看到一个未提交的修改"><a href="#在客户端可以看到一个未提交的修改" class="headerlink" title="在客户端可以看到一个未提交的修改"></a>在客户端可以看到一个未提交的修改</h4><h4 id="填写评论并提交修改"><a href="#填写评论并提交修改" class="headerlink" title="填写评论并提交修改"></a>填写评论并提交修改</h4><h4 id="点击右上角的sync同步按钮将其提交到Github网站上"><a href="#点击右上角的sync同步按钮将其提交到Github网站上" class="headerlink" title="点击右上角的sync同步按钮将其提交到Github网站上"></a>点击右上角的sync同步按钮将其提交到Github网站上</h4><h4 id="在Github网站上可以看到新增的commits，表示已实现同步，重复修改同步即可"><a href="#在Github网站上可以看到新增的commits，表示已实现同步，重复修改同步即可" class="headerlink" title="在Github网站上可以看到新增的commits，表示已实现同步，重复修改同步即可"></a>在Github网站上可以看到新增的commits，表示已实现同步，重复修改同步即可</h4><h5 id=""><a href="#" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wps9808.tmp.jpg" alt="img"></h5><h5 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wpsDADE.tmp.jpg" alt="img"></h5><h5 id="-2"><a href="#-2" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wps23CF.tmp.jpg" alt="img"></h5><p><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wpsC688.tmp.jpg" alt="img"></p>
-<h5 id="-3"><a href="#-3" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wpsEDE7.tmp.jpg" alt="img"></h5><h5 id="-4"><a href="#-4" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wps6900.tmp.jpg" alt="img"></h5><h5 id="-5"><a href="#-5" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wpsE6B6.tmp.jpg" alt="img"></h5><h3 id="2-分支开发与合并："><a href="#2-分支开发与合并：" class="headerlink" title="2.分支开发与合并："></a>2.分支开发与合并：</h3><h4 id="打开Github客户端，点击左上角的create-new-branch，填写分支名称comment1"><a href="#打开Github客户端，点击左上角的create-new-branch，填写分支名称comment1" class="headerlink" title="打开Github客户端，点击左上角的create new branch，填写分支名称comment1"></a>打开Github客户端，点击左上角的create new branch，填写分支名称comment1</h4><h4 id="在poem文件中写入一句评论语句并保存"><a href="#在poem文件中写入一句评论语句并保存" class="headerlink" title="在poem文件中写入一句评论语句并保存"></a>在poem文件中写入一句评论语句并保存</h4><h4 id="提交修改并同步到Github"><a href="#提交修改并同步到Github" class="headerlink" title="提交修改并同步到Github"></a>提交修改并同步到Github</h4><h4 id="在Github客户端打开，点击compare-amp-pull-request并提交将该分支合并到master中"><a href="#在Github客户端打开，点击compare-amp-pull-request并提交将该分支合并到master中" class="headerlink" title="在Github客户端打开，点击compare&amp;pull request并提交将该分支合并到master中"></a>在Github客户端打开，点击compare&amp;pull request并提交将该分支合并到master中</h4><h4 id="在Github网站上可以看到新增的branch，表示已实现同步，重复修改即可"><a href="#在Github网站上可以看到新增的branch，表示已实现同步，重复修改即可" class="headerlink" title="在Github网站上可以看到新增的branch，表示已实现同步，重复修改即可"></a>在Github网站上可以看到新增的branch，表示已实现同步，重复修改即可</h4><h5 id="-6"><a href="#-6" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wpsB0DF.tmp.jpg" alt="img"></h5><h5 id="-7"><a href="#-7" class="headerlink" title=""></a><img src="file:///C:\Users\ADMINI~1\AppData\Local\Temp\ksohtml\wpsD773.tmp.jpg" alt="img"></h5><h2 id="四、实验小结"><a href="#四、实验小结" class="headerlink" title="四、实验小结"></a>四、实验小结</h2><h3 id="这样在Github客户端中修改更加的简便，并且可以看到修改的次数，对于随时随地的保存和修改项目有着极大的作用。"><a href="#这样在Github客户端中修改更加的简便，并且可以看到修改的次数，对于随时随地的保存和修改项目有着极大的作用。" class="headerlink" title="这样在Github客户端中修改更加的简便，并且可以看到修改的次数，对于随时随地的保存和修改项目有着极大的作用。"></a>这样在Github客户端中修改更加的简便，并且可以看到修改的次数，对于随时随地的保存和修改项目有着极大的作用。</h3>
-             </div>
-
-            <!-- Post Comments -->
-            
-    <!-- 使用 DISQUS_CLICK -->
-<div id="disqus-comment">
-    <div id="disqus_thread"></div>
-
-<!-- add animation -->
-<style>
-	.disqus_click_btn {
-            line-height: 30px;
-            margin: 0;
-            min-width: 50px;
-            padding: 0 14px;
-            display: inline-block;
-            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-            font-size: 14px;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 0;
-            overflow: hidden;
-            will-change: box-shadow;
-            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
-            outline: 0;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-            vertical-align: middle;
-            border: 0;
-            background: rgba(158, 158, 158, .2);
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-            color: #fff;
-            background-color: #7EC0EE;
-            text-shadow: 0
-        }
-</style>
-	
-<div class="btn_click_load" id="disqus_bt"> 
-    <button class="disqus_click_btn">点击查看评论</button>
-</div>
-
-<!--
-<script type="text/javascript">
-$('.btn_click_load').click(function() {
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-
-    document.getElementById('disqus_bt').style.display = "none";
-});
-</script>
--->
-<script type="text/javascript">
-    var disqus_config = function () {
-        this.page.url = 'http://yoursite.com/2017/06/02/实验二 Git的使用/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://yoursite.com/2017/06/02/实验二 Git的使用/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-</script>
-
-<script type="text/javascript">
-    $('.btn_click_load').click(function() {  //click to load comments
-        (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document;
-            var s = d.createElement('script');
-            s.src = '//http-miccall-tech.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', + new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-        $('.btn_click_load').css('display','none');
-    });
-</script>
-</div>
-<style>
-    #disqus-comment{
-        background-color: #eee;
-        padding: 2pc;
-    }
-</style>
-
-
-        </div>
-        <!-- Copyright 版权 start -->
-                <div id="copyright">
-            <ul>
-                <li>&copy;Powered By <a href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
-                <li>Design: <a href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
-            </ul>
-            
-            	<span id="busuanzi_container_site_pv">2017总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-			
-        </div>
-    </div>
-</body>
-
-
-
- 	
-</html>
