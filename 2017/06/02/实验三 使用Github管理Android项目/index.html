@@ -1,34 +1,675 @@
-include mixins
+<!doctype html>
 
-extends partial/layout
 
-block site_title
-    != page.title + " · " + config.title
 
-block description
-    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
-    meta(name="description", content=desc)
+  
 
-block content
-  .autopagerize_page_element: .content: .post-page
-    include mixins
-    +make_post(page, true)
-    .share
-      .evernote
-        a.fa.fa-bookmark(href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title);}})();", ref="nofollow", target="_blank")
-      .weibo
-        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
-      .twitter
-        a.fa.fa-twitter(href=url_for("http://twitter.com/home?status="+","+config.url+"/"+page.path+","+config.title+","+page.title+",;"))
-    - var prev = page.prev ? page.prev.path : false;
-    - var next = page.next ? page.next.path : false;
-    .pagination
-      ul.clearfix
-        if prev
-          li.pre.pagbuttons
-            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
-        if next
-          li.next.pagbuttons
-            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
-    if page.comments
-        include partial/comments
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="实验三 使用Github管理Android项目一、实验目的1.掌握Android Studio中Git使用2.掌握Github管理项目二、实验任务1.在Android Studio中新建项目2.添加VCS中的Git支持3.发布项目到Github上4.在Android Studio中进行修改代码、提交、新建分支、合并等操作5.传输项目到Github上三、实验步骤与结果1.打开Android Stud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rodeozhang的博客">
+<meta property="og:url" content="http://yoursite.com/2017/06/02/实验三 使用Github管理Android项目/index.html">
+<meta property="og:site_name" content="Rodeozhang的博客">
+<meta property="og:description" content="实验三 使用Github管理Android项目一、实验目的1.掌握Android Studio中Git使用2.掌握Github管理项目二、实验任务1.在Android Studio中新建项目2.添加VCS中的Git支持3.发布项目到Github上4.在Android Studio中进行修改代码、提交、新建分支、合并等操作5.传输项目到Github上三、实验步骤与结果1.打开Android Stud">
+<meta property="og:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\]ILPKDKE1UATGK]{VA7}L`O.png">
+<meta property="og:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\M54~RJ$O04~T06B[N_N0PFR.png">
+<meta property="og:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\OO~@U4$]0_KJO9LHN1PRKAX.png">
+<meta property="og:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\Y[L80~C4_LRZX$ADRPQ06@S.png">
+<meta property="og:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\T@``LW70`V(">
+<meta property="og:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\30B}I78OBU[EYV@UECY2RB6.png">
+<meta property="og:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\H~~~S7UK">
+<meta property="og:updated_time" content="2017-06-02T02:45:53.814Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rodeozhang的博客">
+<meta name="twitter:description" content="实验三 使用Github管理Android项目一、实验目的1.掌握Android Studio中Git使用2.掌握Github管理项目二、实验任务1.在Android Studio中新建项目2.添加VCS中的Git支持3.发布项目到Github上4.在Android Studio中进行修改代码、提交、新建分支、合并等操作5.传输项目到Github上三、实验步骤与结果1.打开Android Stud">
+<meta name="twitter:image" content="http://yoursite.com/C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\]ILPKDKE1UATGK]{VA7}L`O.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/02/实验三 使用Github管理Android项目/"/>
+
+
+
+
+
+  <title> | Rodeozhang的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Rodeozhang的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/实验三 使用Github管理Android项目/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rodeozhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rodeozhang的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-02T10:47:24+08:00">
+                2017-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="实验三-使用Github管理Android项目"><a href="#实验三-使用Github管理Android项目" class="headerlink" title="实验三 使用Github管理Android项目"></a>实验三 使用Github管理Android项目</h1><h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、<strong>实验目的</strong></h2><h3 id="1-掌握Android-Studio中Git使用"><a href="#1-掌握Android-Studio中Git使用" class="headerlink" title="1.掌握Android Studio中Git使用"></a>1.掌握Android Studio中Git使用</h3><h3 id="2-掌握Github管理项目"><a href="#2-掌握Github管理项目" class="headerlink" title="2.掌握Github管理项目"></a>2.掌握Github管理项目</h3><h2 id="二、实验任务"><a href="#二、实验任务" class="headerlink" title="二、实验任务"></a>二、实验任务</h2><h3 id="1-在Android-Studio中新建项目"><a href="#1-在Android-Studio中新建项目" class="headerlink" title="1.在Android Studio中新建项目"></a>1.在Android Studio中新建项目</h3><h3 id="2-添加VCS中的Git支持"><a href="#2-添加VCS中的Git支持" class="headerlink" title="2.添加VCS中的Git支持"></a>2.添加VCS中的Git支持</h3><h3 id="3-发布项目到Github上"><a href="#3-发布项目到Github上" class="headerlink" title="3.发布项目到Github上"></a>3.发布项目到Github上</h3><h3 id="4-在Android-Studio中进行修改代码、提交、新建分支、合并等操作"><a href="#4-在Android-Studio中进行修改代码、提交、新建分支、合并等操作" class="headerlink" title="4.在Android Studio中进行修改代码、提交、新建分支、合并等操作"></a>4.在Android Studio中进行修改代码、提交、新建分支、合并等操作</h3><h3 id="5-传输项目到Github上"><a href="#5-传输项目到Github上" class="headerlink" title="5.传输项目到Github上"></a>5.传输项目到Github上</h3><h2 id="三、实验步骤与结果"><a href="#三、实验步骤与结果" class="headerlink" title="三、实验步骤与结果"></a>三、实验步骤与结果</h2><h3 id="1-打开Android-Studio，在Android-Studio上新建项目为GeoQuiz"><a href="#1-打开Android-Studio，在Android-Studio上新建项目为GeoQuiz" class="headerlink" title="1.打开Android Studio，在Android Studio上新建项目为GeoQuiz"></a>1.打开Android Studio，在Android Studio上新建项目为GeoQuiz</h3><h3 id="2-添加VCS中Git支持"><a href="#2-添加VCS中Git支持" class="headerlink" title="2.添加VCS中Git支持"></a>2.添加VCS中Git支持</h3><p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\]ILPKDKE1UATGK]{VA7}L`O.png" alt="ILPKDKE1UATGK{VA7}L`O"></p>
+<h3 id="3-添加描述，并提交到Github客户端上"><a href="#3-添加描述，并提交到Github客户端上" class="headerlink" title="3.添加描述，并提交到Github客户端上"></a>3.添加描述，并提交到Github客户端上<img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\M54~RJ$O04~T06B[N_N0PFR.png" alt="M54~RJ$O04~T06BN_N0PFR"></h3><p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\OO~@U4$]0_KJO9LHN1PRKAX.png" alt="OO~@U4$0_KJO9LHN1PRKAX"></p>
+<h3 id="4-在Android-Studio中进行代码修改、新建分支、合并等操作"><a href="#4-在Android-Studio中进行代码修改、新建分支、合并等操作" class="headerlink" title="4.在Android Studio中进行代码修改、新建分支、合并等操作"></a>4.在Android Studio中进行代码修改、新建分支、合并等操作</h3><p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\Y[L80~C4_LRZX$ADRPQ06@S.png" alt="YL80~C4_LRZX$ADRPQ06@S"></p>
+<h3 id="5-传输到Github上"><a href="#5-传输到Github上" class="headerlink" title="5.传输到Github上"></a>5.传输到Github上</h3><p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\T@``LW70`V(" alt="T@``LW70`V()@VPEJ{J@$8">@VP]EJ{J@$8.png)</p>
+<h3 id="6合并分支并上传到Github上"><a href="#6合并分支并上传到Github上" class="headerlink" title="6合并分支并上传到Github上"></a>6合并分支并上传到Github上</h3><p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\30B}I78OBU[EYV@UECY2RB6.png" alt="30B}I78OBUEYV@UECY2RB6"></p>
+<p><img src="C:\Users\Administrator\Documents\Tencent Files\745773644\FileRecv\MobileFile\Image\H~~~S7UK" alt="H~~~S7UK)M8$C3AQZ`7_M_B">M8$C3AQZ`7_M_B.png)</p>
+<h2 id="四、实验小结"><a href="#四、实验小结" class="headerlink" title="四、实验小结"></a>四、实验小结</h2><h3 id="在Android-Studio上建立项目并实现对项目的修改、分支的建立、分支的合并等操作可以上传到Github客户端上，能更加方便的创建并完成一个项目。"><a href="#在Android-Studio上建立项目并实现对项目的修改、分支的建立、分支的合并等操作可以上传到Github客户端上，能更加方便的创建并完成一个项目。" class="headerlink" title="在Android Studio上建立项目并实现对项目的修改、分支的建立、分支的合并等操作可以上传到Github客户端上，能更加方便的创建并完成一个项目。"></a>在Android Studio上建立项目并实现对项目的修改、分支的建立、分支的合并等操作可以上传到Github客户端上，能更加方便的创建并完成一个项目。</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/02/实验二 Git的使用/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Rodeozhang" />
+          <p class="site-author-name" itemprop="name">Rodeozhang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#实验三-使用Github管理Android项目"><span class="nav-number">1.</span> <span class="nav-text">实验三 使用Github管理Android项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、实验目的"><span class="nav-number">1.1.</span> <span class="nav-text">一、实验目的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-掌握Android-Studio中Git使用"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.掌握Android Studio中Git使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-掌握Github管理项目"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.掌握Github管理项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、实验任务"><span class="nav-number">1.2.</span> <span class="nav-text">二、实验任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-在Android-Studio中新建项目"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.在Android Studio中新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-添加VCS中的Git支持"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.添加VCS中的Git支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-发布项目到Github上"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.发布项目到Github上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-在Android-Studio中进行修改代码、提交、新建分支、合并等操作"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.在Android Studio中进行修改代码、提交、新建分支、合并等操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-传输项目到Github上"><span class="nav-number">1.2.5.</span> <span class="nav-text">5.传输项目到Github上</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、实验步骤与结果"><span class="nav-number">1.3.</span> <span class="nav-text">三、实验步骤与结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-打开Android-Studio，在Android-Studio上新建项目为GeoQuiz"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.打开Android Studio，在Android Studio上新建项目为GeoQuiz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-添加VCS中Git支持"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.添加VCS中Git支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-添加描述，并提交到Github客户端上"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.添加描述，并提交到Github客户端上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-在Android-Studio中进行代码修改、新建分支、合并等操作"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.在Android Studio中进行代码修改、新建分支、合并等操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-传输到Github上"><span class="nav-number">1.3.5.</span> <span class="nav-text">5.传输到Github上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6合并分支并上传到Github上"><span class="nav-number">1.3.6.</span> <span class="nav-text">6合并分支并上传到Github上</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、实验小结"><span class="nav-number">1.4.</span> <span class="nav-text">四、实验小结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在Android-Studio上建立项目并实现对项目的修改、分支的建立、分支的合并等操作可以上传到Github客户端上，能更加方便的创建并完成一个项目。"><span class="nav-number">1.4.1.</span> <span class="nav-text">在Android Studio上建立项目并实现对项目的修改、分支的建立、分支的合并等操作可以上传到Github客户端上，能更加方便的创建并完成一个项目。</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rodeozhang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
